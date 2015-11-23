@@ -25,15 +25,4 @@ GND | 6 | 2
  ```
  Once the tools are installed you will need to power up your xbox console or EEPROM chip, yes, the console needs to physically be turned on. Don't worry, as long as you're not doing anything on your console at the same time that PiPROM is reading/writing to the xbox EEPROM it won't harm anything. If your xbox console frags at boot, or throws a system error, you will only have ~3 minutes to work before it will auto power off. This will be plenty of time for PiPROM to read/write the EEPROM chip.
  From a command line on the Pi run `i2cdetect -y 1` and you should see something similar to the following (output taken from my Pi connected to an xbox console):
- ```
-pi@xb-chip ~/Projects/PiPROM $ sudo i2cdetect -y 1
-     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
-00:          -- -- -- -- -- -- -- -- -- -- -- -- --
-10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-50: 50 -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-70: -- -- -- -- -- -- -- --
-```
+ ![alt text](https://github.com/grimdoomer/PiPROM/images/i2c_xbox.png "")
