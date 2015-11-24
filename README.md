@@ -28,14 +28,21 @@ GND | 6 | 2
  Once the tools are installed you will need to power up your xbox console or EEPROM chip, yes, the console needs to physically be turned on. Don't worry, as long as you're not doing anything on your console at the same time that PiPROM is reading/writing to the xbox EEPROM it won't harm anything. If your xbox console frags at boot, or throws a system error, you will only have ~3 minutes to work before it will auto power off. This will be plenty of time for PiPROM to read/write the EEPROM chip.
  
  From a command line on the Pi run `i2cdetect -y 1` and you should see something similar to the following (output taken from my Pi connected to an xbox console):
+ 
  ![alt text](/images/i2c_xbox.png?raw=true)
  
  The EEPROM on the xbox console is located at address 0x54, but PiPROM already knows this! If your Pi is connected to your xbox console and you don't see output from i2cdetect that looks like the image above then something is wrong. Check your wires, and make sure you have a ground wire between your Pi and xbox console.
  
  If your Pi is connected directly to an I2C EEPROM chip you should only see one address listed in the output from i2cdetect. This is the I2C address you will later plug into PiPROM to override the default I2C address of the xbox EEPROM.
 
-4. Next it's time to get PiPROM on to your Raspberry Pi. We will start by setting up bcm2835, a C library for the broadcom processor the Raspberry Pi uses. It is what PiPROM is built on and you will need to it compile PiPROM. From a command line run the following commands to download and install bcm2835 v1.42. If you run into trouble please refer to the [bcm2835 website](http://www.airspayce.com/mikem/bcm2835/index.html).
-```
+4. Next it's time to get PiPROM on to your Raspberry Pi. We will start by creating a directory for PiPROM and its dependencies. From a command line run the following commands which will create a folder called PiPROM and move you into it.
+ ```
+ mkdir PiPROM
+ cd ./PiPROM
+ ```
+
+ Next we will setup bcm2835, a C library for the broadcom processor the Raspberry Pi uses. It is what PiPROM is built on and you will need to it compile PiPROM. Run the following commands to download and install bcm2835 v1.42. If you run into trouble please refer to the [bcm2835 website](http://www.airspayce.com/mikem/bcm2835/index.html).
+ ```
 wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.42.tar.gz
 tar zxvf bcm2835-1.42.tar.gz
 cd bcm2835-1.42
@@ -44,12 +51,85 @@ make
 sudo make check
 sudo make install
 ```
-
- Next we are going to want to create a folder to download PiPROM to:
+ 
+ Next we are going to download the latest source for PiPROM and compile it. Run the following commands which will move you back into the PiPROM folder and download the latest source code for it.
  ```
- cd /home/pi
- mkdir PiPROM
+ cd ..
+ git clone https://github.com/grimdoomer/PiPROM.git
  cd ./PiPROM
  ```
  
- Next we are going to pull the latest source
+ Finally we will compile PiPROM for your version of Raspberry Pi. From a command line run one of the following commands to compile PiPROM for your version of the Raspberry Pi.
+ 
+ Pi Version | Command
+ --- | ---
+ v1 | ```make p1```
+ v1 B+ | ```make p1b```
+ v2 B | ```make p2```
+ 
+ If everything went smoothly you should see no compiler errors in the output. To check run the ```ls``` command, and there should be a file called "PiPROM.a" in the current folder. If PiPROM.a exists then you successfully compiled PiPROM, if it doesn't then I guess I messed up somewhere... You can send me an email and I can try to see where things went wrong for you.
+ 
+5. Now you are ready to starting reading and writing EEPROMs! Below you can find the syntax for PiPROM. Remeber your PiPROM file is currently called PiPROM.a! You will need to run PiPROM using ```sudo``` in order for it to be able to access the I2C interface.
+
+ If your Pi is connected to an xbox console and you want to read, write, or erase the EEPROM, you can use one of the following commands:
+ ```
+ Read xbox eeprom to eeprom.bin:
+ sudo PiPROM -r ./eeprom.bin
+ 
+ Write eeprom.bin to the xbox:
+ sudo PiPROM -w ./eeprom.bin
+ 
+ Erase the eeprom:
+ sudo PiPROM -e
+ ```
+ 
+ If your Pi is connected directly to an EEPROM not attached to an xbox motherboard you will need the I2C address you found using i2cdetect earlier.
+ ```
+ Read eeprom at I2C address 0x50 to eeprom.bin:
+ sudo PiPROM -r -a 0x50 ./eeprom.bin
+ 
+ Write eeprom.bin to eeprom at I2C address 0x48:
+ sudo PiPROM -w -a 0x48 ./eeprom.bin
+ 
+ Erase eeprom at I2C address 0x54:
+ sudo PiPROM -e -a 0x54
+ ```
+ 
+ PiPROM command line syntax:
+ ```
+ PiPROM v1.0 by Grimdoomer
+
+Usage: PiPROM -r/w/e <options> <filename>
+        -r              Read the EEPROM chip contents to <filename>.
+        -w              Write the contents of <filename> to the EEPROM chip.
+        -e              Erases the EEPROM filling it with 00s.
+        filename        EEPROM file to read from/write to.
+
+Optional:
+        -a <address>    I2C address of the EEPROM chip.
+ ```
+ 
+ If you receive any errors during the reading or writing process check your wiring. Make sure your SDA, SCL, and GND wires have a strong connection between the Pi and the Xbox/EEPROM chip.
+
+### Troubleshooting
+Q: I'm having trouble getting the I2C interface setup on my Pi, what should I do?
+A: Check out Adafruit's [tutorial](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c) on setting up the I2C interface.
+
+Q: I'm having trouble setting up bcm2835 or version 1.42 is no longer available?
+A: Check out the [bcm2835 website](http://www.airspayce.com/mikem/bcm2835/index.html) for help getting it setup, or finding a newer version to compile with.
+
+Q: When I run i2cdetect no devices are detected?
+A: Check and make sure you don't have your SDA/SCL wires mixed up, and make sure your ground connection between your Pi and xbox/EEPROM is good. If you are trying to use PiPROM with an xbox make sure the console is power on before runnng i2cdetect or PiPROM.
+
+Q: I get errors when trying to read/write an EEPROM chip?
+A: Check and make sure you don't have your SDA/SCL wires mixed up, and make sure your ground connection between your Pi and xbox/EEPROM is good.
+
+### Changelog
+* v1.0 - Initial release
+  * Cleaned up source code for initial release.
+  * Added the -a switch to specify an I2C address to use.
+
+### Greets
+A big thank you to Adafruit for all of their work and support for the Raspberry Pi community, and Mike McCauley for making the bcm2835 library.
+
+For more of my projects you can visit my website: www.icode4.coffee
