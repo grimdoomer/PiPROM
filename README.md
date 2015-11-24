@@ -112,17 +112,26 @@ Optional:
  If you receive any errors during the reading or writing process check your wiring. Make sure your SDA, SCL, and GND wires have a strong connection between the Pi and the Xbox/EEPROM chip.
 
 ### Troubleshooting
+<p>
 Q: I'm having trouble getting the I2C interface setup on my Pi, what should I do?
+<br>
 A: Check out Adafruit's [tutorial](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c) on setting up the I2C interface.
+<br><br>
 
 Q: I'm having trouble setting up bcm2835 or version 1.42 is no longer available?
+<br>
 A: Check out the [bcm2835 website](http://www.airspayce.com/mikem/bcm2835/index.html) for help getting it setup, or finding a newer version to compile with.
+<br><br>
 
 Q: When I run i2cdetect no devices are detected?
+<br>
 A: Check and make sure you don't have your SDA/SCL wires mixed up, and make sure your ground connection between your Pi and xbox/EEPROM is good. If you are trying to use PiPROM with an xbox make sure the console is power on before runnng i2cdetect or PiPROM.
+<br><br>
 
 Q: I get errors when trying to read/write an EEPROM chip?
+<br>
 A: Check and make sure you don't have your SDA/SCL wires mixed up, and make sure your ground connection between your Pi and xbox/EEPROM is good.
+</p>
 
 ### Changelog
 * v1.0 - Initial release
