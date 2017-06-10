@@ -94,6 +94,7 @@ sudo make install
  Erase eeprom at I2C address 0x54:
  sudo PiPROM -e -a 0x54
  ```
+ Note: You may need to replace "PiPROM" with "./PiPROM.a" on the command line if you get an error saying "PiPROM command not found". 
  
  PiPROM command line syntax:
  ```
@@ -109,7 +110,7 @@ Optional:
         -a <address>    I2C address of the EEPROM chip.
  ```
  
- Note: You may need to replace "PiPROM" with "./PiPROM.a" on the command line if you get an error saying "PiPROM command not found". If you receive any errors during the reading or writing process check your wiring. Make sure your SDA, SCL, and GND wires have a strong connection between the Pi and the Xbox/EEPROM chip.
+ If you receive any errors during the reading or writing process check your wiring. Make sure your SDA, SCL, and GND wires have a strong connection between the Pi and the Xbox/EEPROM chip.
 
 ### Troubleshooting
 <p>
