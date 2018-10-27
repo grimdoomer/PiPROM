@@ -11,6 +11,7 @@
 
 #include "XboxI2C.h"
 #include <bcm2835.h>
+#include <string.h>
 
 void XboxI2C_Init(void)
 {
