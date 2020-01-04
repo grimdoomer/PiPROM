@@ -26,8 +26,9 @@ PiPROM.a: $(OBJ)
 p1: CFLAGS+= -DRASPI_1
 p1b: CFLAGS+= -DRASPI_BPLUS
 p2: CFLAGS+= -DRASPI_2
+p3: CFLAGS+= -DRASPI_2
 
-p1 p1b p2: PiPROM.a
+p1 p1b p2 p3: PiPROM.a
 
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~ 
