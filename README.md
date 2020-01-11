@@ -54,6 +54,14 @@ sudo make install
  
  Next we are going to download the latest source for PiPROM and compile it. Run the following commands which will move you back into the PiPROM folder and download the latest source code for it.
  
+  ```
+ I added my own line into this. Use mine until the original OP fixes/merges my changes.
+ cd ..
+ git clone https://github.com/risk510/PiPROM.git
+ cd ./PiPROM
+ ```
+ 
+ (Dont follow this unless OP merges my changes)
  ```
  cd ..
  git clone https://github.com/grimdoomer/PiPROM.git
