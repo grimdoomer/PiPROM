@@ -53,6 +53,16 @@ sudo make install
 ```
  
  Next we are going to download the latest source for PiPROM and compile it. Run the following commands which will move you back into the PiPROM folder and download the latest source code for it.
+
+I added my own line into this. Use mine until the original OP fixes/merges my changes.
+
+  ```
+ cd ..
+ git clone https://github.com/risk510/PiPROM.git
+ cd ./PiPROM
+ ```
+ 
+ (Dont follow this unless OP merges my changes)
  ```
  cd ..
  git clone https://github.com/grimdoomer/PiPROM.git
@@ -66,6 +76,7 @@ sudo make install
  v1 | ```make p1```
  v1 B+ | ```make p1b```
  v2 B | ```make p2```
+ v3 B | ```make p3```
  
  If everything went smoothly you should see no compiler errors in the output. To check run the ```ls``` command, and there should be a file called "PiPROM.a" in the current folder. If PiPROM.a exists then you successfully compiled PiPROM, if it doesn't then I guess I messed up somewhere... You can send me an email and I can try to see where things went wrong for you.
  

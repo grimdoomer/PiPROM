@@ -15,6 +15,8 @@
 #include <bcm2835.h>
 #include <stdio.h>
 #include "XboxI2C.h"
+#include <string.h>
+#include <stdlib.h>
 
 #define MODE_READ		1
 #define MODE_WRITE		2
