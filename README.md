@@ -6,9 +6,9 @@ PiPROM allows your Raspberry Pi to interface with I2C based xbox EEPROM chips. Y
 
 ### Getting Started
 1. The first step in getting PiPROM running is to enable the I2C interface on your Raspberry Pi. Adafruit has a very nice [tutorial](https://learn.adafruit.com/adafruits-raspberry-pi-lesson-4-gpio-setup/configuring-i2c) on how to do this.
-2. Once you have the I2C interface up and running on your Raspberry Pi it's time to get it connected to your xbox console. For xbox versions 1.0 - 1.5 it will require 3 wires to be soldered to the LPC port on your xbox motherboard, for version 1.6 it will require a few more connections that are a bit tricky. 
+2. Once you have the I2C interface up and running on your Raspberry Pi it's time to get it connected to your xbox console. For xbox versions 1.0 - 1.6 it will require 3 wires to be soldered to the LPC port on your xbox motherboard.
 
- You will need to connect the two I2C pins on your Raspberry Pi to the I2C pins on your xbox/I2C chip, as well as a ground wire between the two. The ground wire is very important! It acts as a reference line for the Pi to tell when a GPIO is high or low. If your Pi doesn't have the same ground reference as your xbox your results may be sporatic. The wiring chart below outlines the connections you need to make to connect your Pi to an xbox console. The numbers refer to the RAW pin numbers on the Pi, and the LPC pins on an xbox motherboard. Note that the pins are the same on all versions of the Raspberry Pi (V1, B+, V2).
+ You will need to connect the two I2C pins on your Raspberry Pi to the I2C pins on your xbox/I2C chip, as well as a ground wire between the two. The ground wire is very important! It acts as a reference line for the Pi to tell when a GPIO is high or low. If your Pi doesn't have the same ground reference as your xbox your results may be sporatic. The wiring chart below outlines the connections you need to make to connect your Pi to an xbox console. The numbers refer to the RAW pin numbers on the Pi, and the LPC pins on an xbox motherboard. Note that the pins are the same on all versions of the Raspberry Pi (V1, B+, V2, V3, V4).
 
  Pin | Pi | Xbox v1.0 - 1.6
 --- | --- | --- 
@@ -60,6 +60,7 @@ For Raspberry Pi 4
 wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.62.tar.gz
 tar zxvf bcm2835-1.62.tar.gz
 cd bcm2835-1.62
+./configure
 make
 sudo make check
 sudo make install
