@@ -92,6 +92,7 @@ I added my own line into this. Use mine until the original OP fixes/merges my ch
  v2 B | ```make p2```
  v3 B | ```make p3```
  v4 | ```make p3```
+=======
  
  If everything went smoothly you should see no compiler errors in the output. To check run the ```ls``` command, and there should be a file called "PiPROM.a" in the current folder. If PiPROM.a exists then you successfully compiled PiPROM, if it doesn't then I guess I messed up somewhere... You can send me an email and I can try to see where things went wrong for you.
  
